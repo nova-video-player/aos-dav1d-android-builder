@@ -84,7 +84,8 @@ case "${ARCH}" in
 		exit 1 ;;
 esac
 
-CROSS_PREFIX="${NDK_PATH}"/toolchains/llvm/prebuilt/linux-x86_64/bin
+os=$(uname -s | tr '[:upper:]' '[:lower:]')
+CROSS_PREFIX="${NDK_PATH}"/toolchains/llvm/prebuilt/${os}-x86_64/bin
 
 set -eu
 
