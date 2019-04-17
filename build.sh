@@ -134,5 +134,6 @@ meson --buildtype release --cross-file ../android_cross_${ABI}.txt ../${dir_name
 echo "Building with Ninja"
 #cd ${dir_name}-${ABI}
 ninja -C  ../${dir_name}-${ABI}
+sed -i 's:libdav1d\.so\.[0-9]:libdav1d\.so\x0\x0:' $(readlink -f ../${dir_name}-${ABI}/src/libdav1d.so)
 
 echo "Done!"
