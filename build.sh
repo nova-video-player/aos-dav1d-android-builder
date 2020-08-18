@@ -122,7 +122,8 @@ else
 fi
 
 if [ ! -d dav1d ]; then
-	git clone https://code.videolan.org/videolan/dav1d -b 0.7.0
+	#git clone https://code.videolan.org/videolan/dav1d -b 0.7.0
+	git clone https://code.videolan.org/videolan/dav1d
 fi
 
 cd dav1d
