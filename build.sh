@@ -53,14 +53,14 @@ case "${ARCH}" in
     CPU_FAMILY='arm'
     ARCH_CFLAGS='-march=armv7-a -mfpu=neon -mfloat-abi=softfp -mthumb'
     ARCH_LDFLAGS='-march=armv7-a -Wl,--fix-cortex-a8'
-    B_ARCH='arm' 
+    B_ARCH='arm'
     B_ADDRESS_MODEL=32 ;;
   'arm64')
     ARCH_TRIPLET='aarch64-linux-android'
     ARCH_TRIPLET_VARIANT=$ARCH_TRIPLET
     ABI='arm64-v8a'
     CPU_FAMILY='aarch64'
-    B_ARCH='arm'     
+    B_ARCH='arm'
     B_ADDRESS_MODEL=64 ;;
   'x86')
     ARCH_TRIPLET='i686-linux-android'
@@ -69,7 +69,7 @@ case "${ARCH}" in
     ARCH_CFLAGS='-march=i686 -mtune=intel -mssse3 -mfpmath=sse -m32'
     ABI='x86'
     CPU_FAMILY='x86'
-    B_ARCH='x86'        
+    B_ARCH='x86'
     B_ADDRESS_MODEL=32 ;;
   'x86_64')
     ARCH_TRIPLET='x86_64-linux-android'
@@ -77,7 +77,7 @@ case "${ARCH}" in
     ABI='x86_64'
     CPU_FAMILY='x86_64'
     ARCH_CFLAGS='-march=x86-64 -msse4.2 -mpopcnt -m64 -mtune=intel'
-    B_ARCH='x86'        
+    B_ARCH='x86'
     B_ADDRESS_MODEL=64 ;;
   *)
     echo "Arch ${ARCH} is not supported."
@@ -96,7 +96,7 @@ user_config=android_cross_${ABI}.txt
 rm -f $user_config
 cat <<EOF > $user_config
 [binaries]
-name = 'android'  
+name = 'android'
 c     = "${CROSS_PREFIX}/${ARCH_TRIPLET_VARIANT}${ANDROID_API}-clang"
 cpp   = "${CROSS_PREFIX}/${ARCH_TRIPLET_VARIANT}${ANDROID_API}-clang++"
 ar    = "${CROSS_PREFIX}/${ARCH_TRIPLET}-ar"
@@ -116,7 +116,7 @@ EOF
 
 if [ ! -d "${dir_name}-${ABI}" ]; then
   mkdir ${dir_name}-${ABI}
-else 
+else
   echo "Already built for ${ABI}"
   exit 0
 fi
