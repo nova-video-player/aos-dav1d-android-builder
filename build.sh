@@ -82,11 +82,11 @@ rm -f $user_config
 cat <<EOF > $user_config
 [binaries]
 name = 'android'
-c     = "${CROSS_PREFIX}/${ARCH_TRIPLET_VARIANT}${ANDROID_API}-clang"
-cpp   = "${CROSS_PREFIX}/${ARCH_TRIPLET_VARIANT}${ANDROID_API}-clang++"
-ar    = "${CROSS_PREFIX}/${ARCH_TRIPLET}-ar"
-ld    = "${CROSS_PREFIX}/${ARCH_TRIPLET}-ld"
-strip = "${CROSS_PREFIX}/${ARCH_TRIPLET}-strip"
+c     = '${CROSS_PREFIX}/${ARCH_TRIPLET_VARIANT}${ANDROID_API}-clang'
+cpp   = '${CROSS_PREFIX}/${ARCH_TRIPLET_VARIANT}${ANDROID_API}-clang++'
+ar    = '${CROSS_PREFIX}/${ARCH_TRIPLET}-ar'
+ld    = '${CROSS_PREFIX}/${ARCH_TRIPLET}-ld'
+strip = '${CROSS_PREFIX}/${ARCH_TRIPLET}-strip'
 
 [properties]
 needs_exe_wrapper = true
