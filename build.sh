@@ -21,25 +21,10 @@ if [[ -z "${ARCH}" ]] ; then
 fi
 
 LOCAL_PATH=$(readlink -f .)
-NDK_PATH=$(dirname "$(which ndk-build)")
-NDK_VERSION=r19-beta2
 
-if [ -z ${NDK_PATH} ] || [ ! -d ${NDK_PATH} ] || [ ${NDK_PATH} == . ]; then
-  NDK_NAME="android-ndk-${NDK_VERSION}"
-  if [ -d ~/"${NDK_NAME}" ]; then
-    echo 'using home ndk'
-    NDK_PATH=$(readlink -f ~/"${NDK_NAME}")
-  else
-    if [ ! -d "${NDK_NAME}" ]; then
-      echo "downloading android ndk ${NDK_NAME}..."
-      wget https://dl.google.com/android/repository/${NDK_NAME}-linux-x86_64.zip
-      unzip "${NDK_NAME}-linux-x86_64.zip"
-      rm -f "${NDK_NAME}-linux-x86_64.zip"
-    fi
-    echo 'using integrated ndk'
-    NDK_PATH=$(readlink -f "${NDK_NAME}")
-  fi
-fi
+[ ! -d "${ANDROID_HOME}/ndk" ] && ${ANDROID_HOME}/tools/bin/sdkmanager --install ndk-bundle
+NDK_PATH=$(ls -d ${ANDROID_HOME}/ndk/* | sort -V | tail -n 1)
+echo NDK_PATH is ${NDK_PATH}
 
 ANDROID_API=21
 
