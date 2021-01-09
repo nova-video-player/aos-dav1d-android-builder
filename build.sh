@@ -22,7 +22,7 @@ fi
 
 LOCAL_PATH=$(readlink -f .)
 
-[ ! -d "${ANDROID_HOME}/ndk" ] && ${ANDROID_HOME}/tools/bin/sdkmanager --install ndk-bundle
+[ ! -d "${ANDROID_HOME}/ndk" ] && ${ANDROID_HOME}/tools/bin/sdkmanager ndk-bundle
 NDK_PATH=$(ls -d ${ANDROID_HOME}/ndk/* | sort -V | tail -n 1)
 echo NDK_PATH is ${NDK_PATH}
 
