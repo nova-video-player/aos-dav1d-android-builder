@@ -22,8 +22,14 @@ fi
 
 LOCAL_PATH=$(readlink -f .)
 
-[ ! -d "${ANDROID_HOME}/ndk" ] && ${ANDROID_HOME}/tools/bin/sdkmanager ndk-bundle
-NDK_PATH=$(ls -d ${ANDROID_HOME}/ndk/* | sort -V | tail -n 1)
+# android sdk directory is changing
+[ -n "${ANDROID_HOME}" ] && androidSdk=${ANDROID_HOME}
+[ -n "${ANDROID_SDK_ROOT}" ] && androidSdk=${ANDROID_SDK_ROOT}
+# multiple sdkmanager paths
+export PATH=${androidSdk}/cmdline-tools/tools/bin:${androidSdk}/tools/bin:$PATH
+[ ! -d "${androidSdk}/ndk-bundle" -a ! -d "${androidSdk}/ndk" ] && sdkmanager ndk-bundle
+[ -d "${androidSdk}/ndk" ] && NDK_PATH=$(ls -d ${androidSdk}/ndk/* | sort -V | tail -n 1)
+[ -d "${androidSdk}/ndk-bundle" ] && NDK_PATH=${androidSdk}/ndk-bundle
 echo NDK_PATH is ${NDK_PATH}
 
 ANDROID_API=21
