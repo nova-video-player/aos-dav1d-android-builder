@@ -20,7 +20,18 @@ if [[ -z "${ARCH}" ]] ; then
   exit 1
 fi
 
-LOCAL_PATH=$(readlink -f .)
+
+case `uname` in
+  Linux)
+    READLINK=readlink
+  ;;
+  Darwin)
+    # assumes brew install coreutils in order to support readlink -f on macOS
+    READLINK=greadlink
+  ;;
+esac
+
+LOCAL_PATH=$($READLINK -f .)
 
 # android sdk directory is changing
 [ -n "${ANDROID_HOME}" ] && androidSdk=${ANDROID_HOME}
@@ -125,6 +136,6 @@ meson --buildtype release --cross-file ../android_cross_${ABI}.txt -Denable_tool
 echo "Building with Ninja"
 #cd ${dir_name}-${ABI}
 ninja -C  ../${dir_name}-${ABI}
-sed -i 's:libdav1d\.so\.[0-9]:libdav1d\.so\x0\x0:' $(readlink -f ../${dir_name}-${ABI}/src/libdav1d.so)
+sed -i 's:libdav1d\.so\.[0-9]:libdav1d\.so\x0\x0:' $($READLINK -f ../${dir_name}-${ABI}/src/libdav1d.so)
 
 echo "Done!"
