@@ -24,10 +24,12 @@ fi
 case `uname` in
   Linux)
     READLINK=readlink
+    SED=sed
   ;;
   Darwin)
     # assumes brew install coreutils in order to support readlink -f on macOS
     READLINK=greadlink
+    SED=gsed
   ;;
 esac
 
@@ -124,7 +126,7 @@ else
 fi
 
 if [ ! -d dav1d ]; then
-  git clone https://code.videolan.org/videolan/dav1d -b 0.9.0
+  git clone https://code.videolan.org/videolan/dav1d -b 0.9.2
 fi
 
 cd dav1d
@@ -136,6 +138,6 @@ meson --buildtype release --cross-file ../android_cross_${ABI}.txt -Denable_tool
 echo "Building with Ninja"
 #cd ${dir_name}-${ABI}
 ninja -C  ../${dir_name}-${ABI}
-sed -i 's:libdav1d\.so\.[0-9]:libdav1d\.so\x0\x0:' $($READLINK -f ../${dir_name}-${ABI}/src/libdav1d.so)
+$SED -i 's:libdav1d\.so\.[0-9]:libdav1d\.so\x0\x0:' $($READLINK -f ../${dir_name}-${ABI}/src/libdav1d.so)
 
 echo "Done!"
