@@ -40,9 +40,14 @@ LOCAL_PATH=$($READLINK -f .)
 [ -n "${ANDROID_SDK_ROOT}" ] && androidSdk=${ANDROID_SDK_ROOT}
 # multiple sdkmanager paths
 export PATH=${androidSdk}/cmdline-tools/tools/bin:${androidSdk}/tools/bin:$PATH
-[ ! -d "${androidSdk}/ndk-bundle" -a ! -d "${androidSdk}/ndk" ] && sdkmanager ndk-bundle
-[ -d "${androidSdk}/ndk" ] && NDK_PATH=$(ls -d ${androidSdk}/ndk/* | sort -V | tail -n 1)
+if [ ! -d "${androidSdk}/ndk-bundle" -a ! -d "${androidSdk}/ndk" ]
+then
+  ndk=$(pkg="ndk;$NDKVER"; sdkmanager --list | grep ${pkg} | sed "s/^.*\($pkg\.[0-9\.]*\) .*$/\1/g" | tail -n 1)
+  yes | sdkmanager "${ndk}" > /dev/null
+  echo NDK $ndk installed
+fi
 [ -d "${androidSdk}/ndk-bundle" ] && NDK_PATH=${androidSdk}/ndk-bundle
+[ -d "${androidSdk}/ndk" ] && NDK_PATH=$(ls -d ${androidSdk}/ndk/* | sort -V | tail -n 1)
 echo NDK_PATH is ${NDK_PATH}
 
 ANDROID_API=21
@@ -103,7 +108,7 @@ cat <<EOF > $user_config
 name = 'android'
 c     = '${CROSS_PREFIX}/${ARCH_TRIPLET_VARIANT}${ANDROID_API}-clang'
 cpp   = '${CROSS_PREFIX}/${ARCH_TRIPLET_VARIANT}${ANDROID_API}-clang++'
-ar    = '${CROSS_PREFIX}/${ARCH_TRIPLET}-ar'
+ar    = '${CROSS_PREFIX}/llvm-ar'
 ld    = '${CROSS_PREFIX}/${ARCH_TRIPLET}-ld'
 strip = '${CROSS_PREFIX}/${ARCH_TRIPLET}-strip'
 
