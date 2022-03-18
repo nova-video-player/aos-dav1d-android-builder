@@ -105,7 +105,7 @@ else
 fi
 
 if [ ! -d dav1d ]; then
-  git -c http.sslVerify=false clone https://code.videolan.org/videolan/dav1d -b 0.9.2
+  git -c http.sslVerify=false clone https://code.videolan.org/videolan/dav1d -b 1.0.0
 fi
 
 cd dav1d
