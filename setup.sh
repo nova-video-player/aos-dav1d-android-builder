@@ -31,12 +31,13 @@ case `uname` in
     JAVA11=$(/usr/libexec/java_home -v 11)
   ;;
 esac
+[ -n "$JAVA11" ] && export PATH=${JAVA11}/bin:$PATH
 # multiple sdkmanager paths
 export PATH=${androidSdk}/cmdline-tools/latest/bin:${androidSdk}/cmdline-tools/bin:${androidSdk}/tools/bin:$PATH
 WHICHSDKMANAGER=`which sdkmanager`
-[ "$WHICHSDKMANAGER" == "${androidSdk}/tools/bin/sdkmanager" ] && SDKMANAGER="JAVA_HOME=${JAVA8} yes | ${androidSdk}/tools/bin/sdkmanager"
-[ "$WHICHSDKMANAGER" == "${androidSdk}/cmdline-tools/bin/sdkmanager" ] && SDKMANAGER="JAVA_HOME=${JAVA11} yes | ${androidSdk}/cmdline-tools/bin/sdkmanager --sdk_root=${androidSdk}"
-[ "$WHICHSDKMANAGER" == "${androidSdk}/cmdline-tools/latest/bin/sdkmanager" ] && SDKMANAGER="JAVA_HOME=${JAVA11} yes | ${androidSdk}/cmdline-tools/latest/bin/sdkmanager"
+[ "$WHICHSDKMANAGER" == "${androidSdk}/tools/bin/sdkmanager" ] && yes | SDKMANAGER="JAVA_HOME=${JAVA8} ${androidSdk}/tools/bin/sdkmanager"
+[ "$WHICHSDKMANAGER" == "${androidSdk}/cmdline-tools/bin/sdkmanager" ] && yes | SDKMANAGER="JAVA_HOME=${JAVA11} ${androidSdk}/cmdline-tools/bin/sdkmanager --sdk_root=${androidSdk}"
+[ "$WHICHSDKMANAGER" == "${androidSdk}/cmdline-tools/latest/bin/sdkmanager" ] && yes | SDKMANAGER="JAVA_HOME=${JAVA11} ${androidSdk}/cmdline-tools/latest/bin/sdkmanager"
 NDKVER=23
 # retrieve first the java11 latest sdkmanager from cmdline-tools
 eval $SDKMANAGER \'cmdline-tools\;latest\'
