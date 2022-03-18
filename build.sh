@@ -20,36 +20,9 @@ if [[ -z "${ARCH}" ]] ; then
   exit 1
 fi
 
-
-case `uname` in
-  Linux)
-    READLINK=readlink
-    SED=sed
-  ;;
-  Darwin)
-    # assumes brew install coreutils in order to support readlink -f on macOS
-    READLINK=greadlink
-    SED=gsed
-  ;;
-esac
+source ./setup.sh
 
 LOCAL_PATH=$($READLINK -f .)
-
-# android sdk directory is changing
-[ -n "${ANDROID_HOME}" ] && androidSdk=${ANDROID_HOME}
-[ -n "${ANDROID_SDK_ROOT}" ] && androidSdk=${ANDROID_SDK_ROOT}
-# multiple sdkmanager paths
-export PATH=${androidSdk}/cmdline-tools/latest/bin:${androidSdk}/cmdline-tools/bin:$PATH
-NDKVER=23
-if [ ! -d "${androidSdk}/ndk-bundle" -a ! -d "${androidSdk}/ndk" ]
-then
-  ndk=$(pkg="ndk;$NDKVER"; sdkmanager --list | grep ${pkg} | sed "s/^.*\($pkg\.[0-9\.]*\) .*$/\1/g" | tail -n 1)
-  yes | sdkmanager "${ndk}" > /dev/null
-  echo NDK $ndk installed
-fi
-[ -d "${androidSdk}/ndk-bundle" ] && NDK_PATH=${androidSdk}/ndk-bundle
-[ -d "${androidSdk}/ndk" ] && NDK_PATH=$(ls -d ${androidSdk}/ndk/* | sort -V | tail -n 1)
-echo NDK_PATH is ${NDK_PATH}
 
 ANDROID_API=21
 
