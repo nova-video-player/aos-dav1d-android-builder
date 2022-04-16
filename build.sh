@@ -20,7 +20,7 @@ if [[ -z "${ARCH}" ]] ; then
   exit 1
 fi
 
-source ../../AVP/android-setup-light.sh
+source ../../AVP/android-setup.sh
 
 LOCAL_PATH=$($READLINK -f .)
 
