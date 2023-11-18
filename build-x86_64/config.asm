@@ -9,7 +9,7 @@
 
 %define PIC 1
 
-%define STACK_ALIGNMENT 32
+%define STACK_ALIGNMENT 16
 
 %define private_prefix dav1d
 

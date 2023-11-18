@@ -1,2 +1,2 @@
 /* auto-generated, do not edit */
-#define DAV1D_VERSION "1.0.0-0-g99172b1"
+#define DAV1D_VERSION "1.3.0-0-g4803559"
