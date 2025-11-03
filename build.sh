@@ -83,11 +83,13 @@ name = 'android'
 c     = '${CROSS_PREFIX}/${ARCH_TRIPLET_VARIANT}${ANDROID_API}-clang'
 cpp   = '${CROSS_PREFIX}/${ARCH_TRIPLET_VARIANT}${ANDROID_API}-clang++'
 ar    = '${CROSS_PREFIX}/llvm-ar'
-ld    = '${CROSS_PREFIX}/${ARCH_TRIPLET}-ld'
+ld    = '${CROSS_PREFIX}/${ARCH_TRIPLET_VARIANT}${ANDROID_API}-clang++'
 strip = '${CROSS_PREFIX}/${ARCH_TRIPLET}-strip'
 
 [properties]
 needs_exe_wrapper = true
+c_link_args = ['-Wl,-z,max-page-size=16384']
+cpp_link_args = ['-Wl,-z,max-page-size=16384']
 
 [host_machine]
 system = 'linux'
