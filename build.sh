@@ -23,6 +23,7 @@ fi
 source ../../AVP/android-setup-light.sh
 
 LOCAL_PATH=$($READLINK -f .)
+PREBUILT_DIR=$($READLINK -f ../prebuilt/dav1d)
 
 ANDROID_API=21
 
@@ -99,9 +100,7 @@ endian = 'little'
 
 EOF
 
-if [ ! -d "${dir_name}-${ABI}" ]; then
-  mkdir ${dir_name}-${ABI}
-else
+if [ -f "${PREBUILT_DIR}/lib/${ABI}/libdav1d.so" ]; then
   echo "Already built for ${ABI}"
   exit 0
 fi
@@ -121,4 +120,9 @@ echo "Building with Ninja"
 ninja -C  ../${dir_name}-${ABI}
 $SED -i 's:libdav1d\.so\.[0-9]:libdav1d\.so\x0\x0:' $($READLINK -f ../${dir_name}-${ABI}/src/libdav1d.so)
 
+echo "Copying to prebuilt directory..."
+mkdir -p ${PREBUILT_DIR}/lib/${ABI}
+cp ../${dir_name}-${ABI}/src/libdav1d.so ${PREBUILT_DIR}/lib/${ABI}/libdav1d.so
+mkdir -p ${PREBUILT_DIR}/include/dav1d
+cp ../${dir_name}-${ABI}/include/vcs_version.h ${PREBUILT_DIR}/include/
 echo "Done!"
